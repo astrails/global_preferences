@@ -1,0 +1,12 @@
+%table
+  %tr{:class => cycle("odd", "even")}
+    %th name
+    %th value
+    %th commands
+  - @global_preferences.each do |pref|
+    %tr{:class => cycle("odd", "even")}
+      %td= pref.name
+      %td= pref.value
+      %td!= link_to "edit", edit_global_preference_path(pref)
+
+!= link_to "add new variable", new_global_preference_path
