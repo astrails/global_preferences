@@ -1,0 +1,16 @@
+class CreateGlobalPreferences < ActiveRecord::Migration
+  def self.up
+    create_table :global_preferences do |t|
+      t.string :name
+      t.string :value
+      t.integer :ttl
+
+      t.timestamps
+    end
+    add_index :global_preferences, [:name], :unique => true
+  end
+
+  def self.down
+    drop_table :global_preferences
+  end
+end
