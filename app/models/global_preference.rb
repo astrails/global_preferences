@@ -3,7 +3,12 @@ class GlobalPreference < ActiveRecord::Base
   validates_uniqueness_of :name
 
   DEFAULT_TTL = 10.minutes
+  def ttl
+    self["ttl"] || DEFAULT_TTL
+  end
+
   @@cache = {}
+
   def self.get(variable)
     value, expires = @@cache[variable]
 
