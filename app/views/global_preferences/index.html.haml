@@ -9,6 +9,8 @@
       %td= pref.name
       %td= pref.value
       %td= pref.ttl
-      %td!= link_to "edit", edit_global_preference_path(pref)
+      %td
+        != link_to "edit", edit_global_preference_path(pref)
+        != link_to "delete", global_preference_path(pref), :method => :delete
 
 != link_to "add new variable", new_global_preference_path

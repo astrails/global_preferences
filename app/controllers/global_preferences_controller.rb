@@ -1,8 +1,9 @@
-class GlobalPreferencesController < Astrails::AdminResourceController
+class GlobalPreferencesController < InheritedResources::Base
   unloadable
+  include InheritedResources::DSL
   before_filter :require_admin
 
-  create.wants.html {redirect_to collection_url}
-  update.wants.html {redirect_to collection_url}
-  destroy.wants.html {redirect_to collection_url}
+  update! {collection_path}
+  create! {collection_path}
+
 end
