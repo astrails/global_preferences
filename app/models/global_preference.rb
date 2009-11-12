@@ -30,6 +30,7 @@ class GlobalPreference < ActiveRecord::Base
   end
 
   def self.set!(variable, value, ttl = DEFAULT_TTL)
+    variable = variable.to_s
     pref = find_or_initialize_by_name(variable)
     pref.value = value
     pref.ttl = ttl
