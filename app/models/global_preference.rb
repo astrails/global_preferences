@@ -11,16 +11,24 @@ class GlobalPreference < ActiveRecord::Base
 
   @@cache = {}
 
-  def self.get(variable)
+  def self.get(variable, default = nil)
     variable = variable.to_s
     value, expires = @@cache[variable]
 
     # return cache if exists and still valid
-    return value if expires && expires > Time.now
+    if expires && expires > Time.now
+      if !value && default
+        set(variable, default)
+        value = default
+      end
+
+      return value
+    end
 
     pref = find_or_initialize_by_name(variable)
-    if pref.new_record?
+    if pref.new_record? || (pref.value.blank? && default)
       # create the record in the db for easy editing
+      pref.value = default
       pref.ttl = DEFAULT_TTL
       pref.save!
     end
